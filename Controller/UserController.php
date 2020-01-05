@@ -86,8 +86,9 @@ class UserController
     }
     public function facebookLogIn(){
         User::facebookRegister($_POST["FacebookName"],$_POST["facebookId"]);
-        $icons = new IconQuery();
-        WebResponse::render("selectIcon.php",array('icons'=>$icons->display()));
     }
-
+    public function renderSelectIcon(){
+        $icons = new IconQuery();
+        WebResponse::render("../View/selectIcon.php",array('icons'=>$icons->display()));
+    }
 }
