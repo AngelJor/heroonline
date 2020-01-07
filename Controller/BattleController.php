@@ -54,7 +54,7 @@ class BattleController
         if (! isset(current($result['round'])['battleOver'])) {
             $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
         }
-
+        var_dump($_SESSION);
         WebResponse::renderWithJson($result);
         //$this->battle->battle($hero1, $hero2, AIChampion::chooseAttackWay());
 

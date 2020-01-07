@@ -59,10 +59,11 @@
         $(document).ready(function () {
             $.ajax({
                 type: "POST",
-                url: "http://localhost/heroonline/public/index.php?target=user&action=facebookLogIn",
+                url: "http://localhost/heroonline/public/index.php?target=user&action=facebookRegister",
                 dataType: "JSON",
-                data: {FacebookName: data['name'], facebookId: data['id'], isFacebookUser: 1}
+                data: {FacebookName:data['name'],facebookId:data['id'],isFacebookUser:1}
             });
+            window.location.replace("http://localhost/heroonline/public/index.php?target=user&action=renderSelectIcon");
         })
     }
 

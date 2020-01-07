@@ -92,4 +92,24 @@ class UsersQuery extends AbstractQuery
             exit($e->getMessage());
         }
     }
+
+    public function loginWithFacebook($id){
+        try {
+            $sth = $this->conn->prepare("
+                    SELECT 
+                         user_id
+                    FROM 
+                        facebook_users
+                    WHERE
+                        facebook_id=:id
+                    ");
+            $sth->bindParam("id", $id);
+            $sth->execute();
+            $result = $sth->fetch(PDO::FETCH_COLUMN);
+            $_SESSION['myId'] = $result;
+            return $result;
+        } catch (PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
 }

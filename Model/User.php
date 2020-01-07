@@ -23,6 +23,16 @@ class User
         }
     }
 
+    public static function loginWithFacebook($id){
+        $query = new UsersQuery();
+        return $query->loginWithFacebook($id);
+    }
+
+    public static function listFacebookChampions($myId){
+        $query = new ChampionQuery();
+        return $query->listChampsForFacebookUsers($myId);
+    }
+
     /**
      * @return mixed
      */
@@ -109,7 +119,6 @@ class User
     }
     public static function facebookRegister($name, $facebookId){
         $query = new UsersQuery();
-        $hashedId = hash('sha256',$facebookId);
         $query->registerWithFacebook($name,$facebookId);
     }
     public static function login($username,$password){
@@ -118,18 +127,25 @@ class User
     }
     public static function createChampion($championName,$userId,$isFacebookUser){
         $query = new ChampionQuery();
-        $query->create($championName, $userId,$isFacebookUser);
+        switch ($isFacebookUser){
+            case 1:
+                $query->createFacebookUser($championName, $userId);
+                break;
+            case 0:
+                $query->create($championName, $userId);
+                break;
+        }
     }
     public static function listUserChampions($userId){
         $query = new ChampionQuery();
         return $query->listChampsForUser($userId);
     }
-    public static function selectIcon($iconId,$userId){
+    public static function selectIcon($iconId,$championId,$isFacebookUser){
         $query = new ChampionQuery();
-        $query->setIcon($iconId,$userId);
+        $query->setIcon($iconId,$championId,$isFacebookUser);
     }
-    public static function selectAvatar($avatarId,$userId){
+    public static function selectAvatar($avatarId,$userId,$isFacebookUser){
         $query = new ChampionQuery();
-        $query->setAvatar($avatarId,$userId);
+        $query->setAvatar($avatarId,$userId,$isFacebookUser);
     }
 }

@@ -18,11 +18,9 @@ class UserController
         }
 
         User::register($name,$email,$username,$password);
-        $icons = new IconQuery();
-        WebResponse::render("../View/selectIcon.php",array('icons'=>$icons->display()));
+        UserController::renderSelectIcon();
     }
     public function selectIcon(){
-        User::selectIcon($_POST["icon"],$_SESSION["myId"]);
         $_SESSION["myIcon"] = ($_POST["icon"]);
         WebResponse::render("../View/createChampion.php");
     }
@@ -35,8 +33,33 @@ class UserController
             echo 'error'; die();
         }
         User::login($username,$password);
-        $champions = User::listUserChampions($_SESSION['myId']);
+        UserController::renderSelectChampion();
+    }
+    public function loginWithFacebook(){
+        User::loginWithFacebook($_POST['facebookId']);
+        $_SESSION['isFacebookUser'] = $_POST['isFacebookUser'];
+    }
+    public static function renderSelectChampion(){
+        if ($_SESSION['isFacebookUser'] == 1){
+            $champions = User::listFacebookChampions($_SESSION['myId']);
+        }else{
+            $champions = User::listUserChampions($_SESSION['myId']);
+        }
         WebResponse::render("../View/selectChampion.php", array('champions'=>$champions));
+    }
+    public function selectChampion(){
+        $champion = $_POST['champion'] ?? '';
+        $myId = $_SESSION['myId'] ?? '';
+
+        if (empty($champion)
+            ||empty($myId)
+        ){
+            echo 'error'; die();
+        }
+
+        $_SESSION['myChampId'] = $champion;
+
+        ChampionController::displayChampion();
     }
     public function logout(){
         unset($_SESSION['myId']);
@@ -47,7 +70,7 @@ class UserController
     public function createChampion(){
         $name = $_POST['name'] ?? '';
         $myId = $_SESSION['myId'] ?? '';
-        $isFacebookUser = $_POST[''] ?? '';
+        $isFacebookUser = $_SESSION['isFacebookUser'] ?? '';
         if(empty($name)
             ||empty($myId)
         ){
@@ -66,28 +89,17 @@ class UserController
     public function selectAvatar(){
         $healSpell = Spell::selectSpell("Heal");
         $dmgSpell = Spell::selectSpell("Dmg");
-        User::selectAvatar($_POST["avatar"],$_SESSION["myId"]);
+        User::selectAvatar($_POST["avatar"],$_SESSION["myId"],$_SESSION['isFacebookUser']);
+        User::selectIcon($_SESSION["myIcon"],$_SESSION['myId'],$_SESSION['isFacebookUser']);
         $_SESSION["myAvatar"] = ($_POST["avatar"]);
         WebResponse::render("../View/selectSpell.php", array('healSpell'=>$healSpell, 'dmgSpell'=>$dmgSpell));
     }
-    public function selectChampion(){
-        $champion = $_POST['champion'] ?? '';
-        $myId = $_SESSION['myId'] ?? '';
 
-        if (empty($champion)
-            ||empty($myId)
-        ){
-            echo 'error'; die();
-        }
-
-        $_SESSION['myChampId'] = $champion;
-
-        ChampionController::displayChampion();
-    }
-    public function facebookLogIn(){
+    public function facebookRegister(){
         User::facebookRegister($_POST["FacebookName"],$_POST["facebookId"]);
+        $_SESSION['isFacebookUser'] = $_POST['isFacebookUser'];
     }
-    public function renderSelectIcon(){
+    public static function renderSelectIcon(){
         $icons = new IconQuery();
         WebResponse::render("../View/selectIcon.php",array('icons'=>$icons->display()));
     }

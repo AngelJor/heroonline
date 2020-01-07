@@ -23,9 +23,8 @@ class ChampionQuery extends AbstractQuery
         return 'champion_id';
     }
 
-    function create($name, $userId, $isFacebookUser)
+    function create($name, $userId)
     {
-        if($isFacebookUser == 0) {
             /** @noinspection SqlResolve */
             $sth = $this->conn->prepare('
             INSERT INTO 
@@ -34,15 +33,21 @@ class ChampionQuery extends AbstractQuery
                 (:name, 100, 10, 0,
                  0,0, 1,:id,0,0)
             ');
-        }else{
-            $sth = $this->conn->prepare('
+        $sth->bindParam(':id',$userId);
+        $sth->bindParam(':name', $name);
+        $sth->execute();
+        $_SESSION['myChampId'] = $this->conn->lastInsertId();
+    }
+    function createFacebookUser($name, $userId)
+    {
+        /** @noinspection SqlResolve */
+        $sth = $this->conn->prepare('
             INSERT INTO 
                 champion(name,health,strength,money,armour_item,xp,lvl,user_id,diamond,facebook_user_id) 
             VALUES 
                 (:name, 100, 10, 0,
-                 0,0, 1,0,:id)
+                 0,0, 1,0,0,:id)
             ');
-        }
         $sth->bindParam(':id',$userId);
         $sth->bindParam(':name', $name);
         $sth->execute();
@@ -124,6 +129,21 @@ class ChampionQuery extends AbstractQuery
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);
         return $result;
     }
+    public function listChampsForFacebookUsers($id){
+        $conn = ConnectionDb::getInstance();
+        $sth = $conn->prepare('
+            SELECT 
+                champion_id
+            FROM
+                champion
+            WHERE
+                facebook_user_id =:userId
+        ');
+        $sth->bindParam('userId',$id);
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN);
+        return $result;
+    }
     public function getUser($championId){
         $conn = ConnectionDb::getInstance();
         $sth = $conn->prepare('
@@ -139,18 +159,33 @@ class ChampionQuery extends AbstractQuery
         $result = $sth->fetch(PDO::FETCH_COLUMN);
         return $result;
     }
-    public function setIcon($iconId,$championId){
-        $sth = $this->conn->prepare("
+    public function setIcon($iconId,$userId,$isFacebookUser){
+        if($isFacebookUser == 0) {
+            $sth = $this->conn->prepare("
                     UPDATE 
                          champion
                     SET 
                         icon_id =:icon_id 
                     WHERE 
-                        champion_id=:champion_id
+                        user_id=:userId
                     ");
-        $sth->bindParam("champion_id", $championId);
-        $sth->bindParam("icon_id", $iconId);
-        $sth->execute();
+            $sth->bindParam("userId", $userId);
+            $sth->bindParam("icon_id", $iconId);
+            $sth->execute();
+        }
+        else{
+            $sth = $this->conn->prepare("
+                    UPDATE 
+                         champion
+                    SET 
+                        icon_id =:icon_id 
+                    WHERE 
+                        facebook_user_id=:userId
+                    ");
+            $sth->bindParam("userId", $userId);
+            $sth->bindParam("icon_id", $iconId);
+            $sth->execute();
+        }
     }
     public function getIcon($user_id){
         $sth = $this->conn->prepare("
@@ -166,8 +201,9 @@ class ChampionQuery extends AbstractQuery
         $result = $sth->fetch(PDO::FETCH_COLUMN);
         return $result;
     }
-    public function setAvatar($avatarId,$user_id){
-        $sth = $this->conn->prepare("
+    public function setAvatar($avatarId,$user_id,$isFacebookUser){
+        if($isFacebookUser == 0) {
+            $sth = $this->conn->prepare("
                     UPDATE 
                          champion
                     SET 
@@ -175,9 +211,23 @@ class ChampionQuery extends AbstractQuery
                     WHERE 
                         user_id=:user_id
                     ");
-        $sth->bindParam("user_id", $user_id);
-        $sth->bindParam("avatar_id", $avatarId);
-        $sth->execute();
+            $sth->bindParam("user_id", $user_id);
+            $sth->bindParam("avatar_id", $avatarId);
+            $sth->execute();
+        }
+        else{
+            $sth = $this->conn->prepare("
+                    UPDATE 
+                         champion
+                    SET 
+                        avatar_id =:avatar_id 
+                    WHERE 
+                        facebook_user_id=:user_id
+                    ");
+            $sth->bindParam("user_id", $user_id);
+            $sth->bindParam("avatar_id", $avatarId);
+            $sth->execute();
+        }
     }
     public function getAvatarId($championId){
         $sth = $this->conn->prepare("

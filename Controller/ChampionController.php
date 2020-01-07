@@ -46,7 +46,6 @@ class ChampionController
         $champVars = $champ->getChampionFields();
 
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
-
         WebResponse::render("../View/myChampion.php",array('champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
     public static function buyDiamonds(){
