@@ -41,7 +41,6 @@ class ChampionController
         WebResponse::render("..\View\selectOpponent.php",array('champions' => Champion::listAllChampions()));
     }
     public static function displayChampion(){
-
         $champ = new Champion($_SESSION["myChampId"]);
         $champVars = $champ->getChampionFields();
 

@@ -107,7 +107,6 @@ class UsersQuery extends AbstractQuery
             $sth->execute();
             $result = $sth->fetch(PDO::FETCH_COLUMN);
             $_SESSION['myId'] = $result;
-            return $result;
         } catch (PDOException $e) {
             exit($e->getMessage());
         }
