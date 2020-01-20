@@ -1,8 +1,0 @@
-{
-
-    "require": {
-        "paypal/paypal-checkout-sdk": "1.0.0",
-        "paypal/rest-api-sdk-php": "*",
-      "ext-pdo": "*"
-    }
-}
