@@ -8,7 +8,11 @@
     },
     "autoload": {
       "psr-4": {
+<<<<<<< HEAD
         "Chat//": "WebSocket"
+=======
+        "Chat\\": "WebSocket"
+>>>>>>> c4ad5fa3408cce919ea53e33d75708a77c8a3046
       }
     }
 }
