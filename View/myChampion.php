@@ -24,7 +24,7 @@
         <a class="nav-link" href="<?=_SERVER_PATH?>user/logout">Log out</a>
     </li>
     <li class="nav-item">
-        <button class="btn btn-outline-danger my-2 my-sm-0" id="LiveBattle" onclick="liveBattle()">Start Live Battle</button>
+        <a class="nav-link" href="../WebSocket/liveBattle.php">Start Live Battle</a>
     </li>
 </ul>
 
@@ -72,16 +72,4 @@
 </div>
 
 </body>
-<script>
-    function liveBattle(){
-        var conn = new WebSocket('ws://localhost:8080');
-        conn.onopen = function(e) {
-            console.log("Connection established!");
-        };
-
-        conn.onmessage = function(e) {
-            console.log(e.data);
-        };
-    }
-</script>
 </html>

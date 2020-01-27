@@ -35,7 +35,7 @@ class BattleController
             $mine = new Champion($hero1Id);
             $enemy = new Champion($hero2Id);
             $battleId = $this->battle->createBattle($hero1Id, $hero2Id);
-            WebResponse::render("../View/battle.php",array('battleId' => $battleId,'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $_POST["opponent"],
+            WebResponse::render("../View/battle.php",array('hero1Id'=>$hero1Id,'hero2Id'=>$hero2Id, 'battleId' => $battleId,'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $_POST["opponent"],
                 'mineHeal'=>$mineHealPower["power"],'mineDmg'=>$mineDmgPower["power"],'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
                 'mineStrength'=>$mine->getStrength(),'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
     }
@@ -55,6 +55,14 @@ class BattleController
             $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
         }
         WebResponse::renderWithJson($result);
+    }
+    function liveBattle(){
 
+        $attacker = new Champion($_POST['Hero1Id']);
+        $defender = new Champion($_POST['Hero2Id']);
+
+        $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
+
+        WebResponse::renderWithJson($result);
     }
 }
