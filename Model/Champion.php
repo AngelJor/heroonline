@@ -228,7 +228,7 @@ class Champion
         foreach ($items as $iKey => $value) {
             $item = $itemQuery->getItem($value);
             foreach ($item as $key => $itemBuff) {
-            $buff[$itemBuff['type']] = $itemBuff['buff'];
+                $buff[$itemBuff['type']] = $itemBuff['buff'];
             }
         }
         return $buff;
@@ -282,5 +282,17 @@ class Champion
     public function getBossLvl()
     {
         return $this->bossLvl;
+    }
+    public function getBestItems(){
+
+        $query = new ItemQuery();
+        $championItemQuery = new ChampionItemQuery();
+        $bestBuff = 0;
+
+        $itemIds = $championItemQuery->getChampionItemId($this->getId());
+        foreach($itemIds as $key => $value){
+
+        }
+
     }
 }

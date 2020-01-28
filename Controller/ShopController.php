@@ -30,7 +30,6 @@ class ShopController
         $champVars = $champ->getChampionFields();
 
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
-        //item things
         $items = Shop::display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
         WebResponse::render("../View/shop.php",array('item'=>$items,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }

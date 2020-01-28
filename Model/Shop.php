@@ -12,17 +12,15 @@ class Shop
         $item = new Item($itemId);
         $champion = new Champion($championId);
         $itemQuery = new ChampionItemQuery();
-        $itemType = $item->getType();
-        if (Champion::getBuffs($championId)[$itemType] < $item->getBuff()) {
-            if ($champion->getMoney() >= $item->getPrice()) {
-                $champion->setMoney($champion->getMoney() - $item->getPrice());
-                $champion->saveMoneyToDb();
-                $champion->setNewStats($item);
-                $itemQuery->addItem($item->getId(),$champion->getId());
-                return 1;
-            } else {
-                return 0;
-            }
+        if ($champion->getMoney() >= $item->getPrice()) {
+            $champion->setMoney($champion->getMoney() - $item->getPrice());
+            $champion->saveMoneyToDb();
+            $champion->setNewStats($item);
+            $itemQuery->addItem($item->getId(),$champion->getId());
+            return 1;
+        } else {
+            return 0;
         }
+
     }
 }
