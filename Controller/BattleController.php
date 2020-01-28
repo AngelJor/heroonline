@@ -12,8 +12,24 @@ class BattleController
     {
         $this->battle = new Fight();
     }
+    function bossFight(){
 
-
+        $championSpellQuery = new ChampionSpellQuery();
+        $hero1Id = $_SESSION['myChampId'];
+        $mine = new Champion($hero1Id);
+        $hero2Id = $mine->getBossLvl();
+        $enemy = new Champion($hero2Id);
+        $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
+        $opponentAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($mine->getBossLvl()));
+        $mineHealPower = $championSpellQuery->getChampionSpellPower($_SESSION["myChampId"],"Heal");
+        $mineDmgPower = $championSpellQuery->getChampionSpellPower($_SESSION["myChampId"],"Dmg");
+        $enemyHealPower = $championSpellQuery->getChampionSpellPower($mine->getBossLvl(),"Heal");
+        $enemyDmgPower = $championSpellQuery->getChampionSpellPower($mine->getBossLvl(),"Dmg");
+        $battleId = $this->battle->createBattle($hero1Id, $hero2Id);
+        WebResponse::render("../View/battle.php",array('battleId' => $battleId,'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $mine->getBossLvl(),
+            'mineHeal'=>$mineHealPower["power"],'mineDmg'=>$mineDmgPower["power"],'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
+            'mineStrength'=>$mine->getStrength(),'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
+    }
     function startBattle()
     {
         $championSpellQuery = new ChampionSpellQuery();
@@ -35,11 +51,13 @@ class BattleController
             $mine = new Champion($hero1Id);
             $enemy = new Champion($hero2Id);
             $battleId = $this->battle->createBattle($hero1Id, $hero2Id);
-            WebResponse::render("../View/battle.php",array('hero1Id'=>$hero1Id,'hero2Id'=>$hero2Id, 'battleId' => $battleId,'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $_POST["opponent"],
+            WebResponse::render("../View/battle.php",array('battleId' => $battleId,'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $_POST["opponent"],
                 'mineHeal'=>$mineHealPower["power"],'mineDmg'=>$mineDmgPower["power"],'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
                 'mineStrength'=>$mine->getStrength(),'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
     }
-
+    function liveBattle(){
+        WebResponse::render("../WebSocket/liveBattle.php", array('Session' => $_SESSION));
+    }
     function attack()
     {
         $battleId = (int)$_POST['battleId'];
@@ -54,15 +72,6 @@ class BattleController
         if (! isset(current($result['round'])['battleOver'])) {
             $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
         }
-        WebResponse::renderWithJson($result);
-    }
-    function liveBattle(){
-
-        $attacker = new Champion($_POST['Hero1Id']);
-        $defender = new Champion($_POST['Hero2Id']);
-
-        $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
-
         WebResponse::renderWithJson($result);
     }
 }
