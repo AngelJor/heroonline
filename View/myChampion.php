@@ -24,7 +24,10 @@
         <a class="nav-link" href="<?=_SERVER_PATH?>user/logout">Log out</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="../WebSocket/liveBattle.php">Start Live Battle</a>
+        <a class="nav-link" href="<?=_SERVER_PATH?>battle/liveBattle">Start Live Battle</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>battle/bossFight">Go on a Mission</a>
     </li>
 </ul>
 
