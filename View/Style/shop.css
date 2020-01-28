@@ -1,0 +1,113 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.myTableBg {
+    border-collapse: separate;
+    border: 1px solid black;
+}
+ul {
+    background-color: #333;
+}
+
+li a {
+    color: white;
+}
+
+li a:hover {
+    background-color: #111;
+}
+.myCell {
+    position: relative;
+    border: 1px solid black;
+    height: 110px;
+    width: 120px;
+    text-align: center;
+    float:left;
+    margin:4px;
+    background-size:100%;
+    background-position:center;
+    overflow: hidden;
+}
+.myCell:hover{
+    background-size:110%;
+}
+.myCell span {
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 20px;
+    padding: 10px;
+    color: #FFF;
+    font-size: 10px;
+    text-align: left;
+    opacity: 0;
+    transition: all 0.25s;
+    background-color:rgba(0,0,0,0.6);
+}
+.myCell:hover span {
+    top: 0;
+    opacity: 1;
+}
+.myCell label {
+    display: block;
+    height: 100px;
+    width: 100px;
+}
+.myCell img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+.money{
+    float: right;
+}
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+.top .top-level {
+    flex-grow: 1;
+}
+.top .progress {
+    flex-grow: 1;
+}
+.top .top-money{
+    flex-grow: 1;
+}
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: darkviolet;
+}
+.hidden{
+    visibility: hidden;
+}
+.content{
+    display: flex;
+    height: 400px;
+    text-align: center;
+}
+.content form{
+    width: 400px;
+}
+.avatarImg{
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+
+.bottom .stats{
+    border: 1px solid black;
+}
+.log-out{
+    position: absolute;
+    right: 0;
+}
