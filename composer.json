@@ -4,15 +4,12 @@
     "paypal/paypal-checkout-sdk": "1.0.0",
     "paypal/rest-api-sdk-php": "*",
     "ext-pdo": "*",
-    "cboden/ratchet": "^0.4.1"
+    "cboden/ratchet": "^0.4.1",
+    "react/zmq": "0.2.*|0.3.*"
     },
     "autoload": {
       "psr-4": {
-<<<<<<< HEAD
-        "Chat//": "WebSocket"
-=======
         "Chat\\": "WebSocket"
->>>>>>> c4ad5fa3408cce919ea53e33d75708a77c8a3046
       }
     }
 }
