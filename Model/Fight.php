@@ -94,31 +94,41 @@ class Fight
 
 
             $championId = $attacker->getId();
-            $xpResult = 0;
-            $moneyResult = 0;
+            if($championId > 10) {
+                if($defender->getId() <= 10){
+                    $attacker->defeatingBoss();
+                    $xpResult = $attacker->getXp() + (10 * $defender->getId());
+                    $moneyResult = $attacker->getMoney() + (100 * $defender->getId());
+                    $championQuery->priceForWin($championId, $xpResult, $moneyResult);
+                }
+                else {
+                    $xpResult = 0;
+                    $moneyResult = 0;
 
-            switch ($attacker->getLvl()){
-                case $attacker->getLvl() > $defender->getLvl():
-                   $xpResult = $attacker->getXp() + 50;
-                   $moneyResult = $attacker->getMoney() + 50;
-                    break;
-                    case $attacker->getLvl() == $defender->getLvl():
-                        $xpResult = $attacker->getXp() + 100;
-                        $moneyResult = $attacker->getMoney() + 100;
-                        break;
+                    switch ($attacker->getLvl()) {
+                        case $attacker->getLvl() > $defender->getLvl():
+                            $xpResult = $attacker->getXp() + 50;
+                            $moneyResult = $attacker->getMoney() + 50;
+                            break;
+                        case $attacker->getLvl() == $defender->getLvl():
+                            $xpResult = $attacker->getXp() + 100;
+                            $moneyResult = $attacker->getMoney() + 100;
+                            break;
                         case $attacker->getLvl() < $defender->getLvl():
                             $xpResult = $attacker->getXp() + 150;
                             $moneyResult = $attacker->getMoney() + 150;
-                        break;
-            }
+                            break;
+                    }
 
-            $championQuery->priceForWin($championId,$xpResult,$moneyResult);
-            if ($attacker->getXp() >= 1000){
-                $championQuery->lvlUp(0,
-                         $attacker->getLvl() + 1,
-                    $attacker->getStrength() + Champion::BASE_DMG_MODIFIER,
-                                $attacker->getMaxHealth(),
-                                $attacker->getId());
+                    $championQuery->priceForWin($championId, $xpResult, $moneyResult);
+                    if ($attacker->getXp() >= 1000) {
+                        $championQuery->lvlUp(0,
+                            $attacker->getLvl() + 1,
+                            $attacker->getStrength() + Champion::BASE_DMG_MODIFIER,
+                            $attacker->getMaxHealth(),
+                            $attacker->getId());
+                    }
+                }
             }
             return $array;
         }

@@ -262,6 +262,7 @@ class ChampionQuery extends AbstractQuery
                          champion_id
                     FROM 
                          champion
+                    WHERE champion_id > 10
                     ");
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);

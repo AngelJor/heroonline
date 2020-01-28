@@ -201,6 +201,12 @@ class Champion
         ];
         $this->query->update($this->getId(),$updateParams);
     }
+    public function defeatingBoss(){
+        $updateParams = [
+            'boss_lvl' => $this->getBossLvl() + 1
+        ];
+        $this->query->update($this->getId(),$updateParams);
+    }
     public function saveXpToDb()
     {
         $updateParams = [
