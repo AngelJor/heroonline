@@ -4,7 +4,11 @@
 
 namespace Composer\Autoload;
 
+<<<<<<< HEAD
 class ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4
+=======
+class ComposerStaticInit877204235c349c625595cbd746ae523a
+>>>>>>> e11180ef249c75f466041efa626d02f8a5f26448
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -151,7 +155,11 @@ class ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4
         ),
         'Chat\\' => 
         array (
+<<<<<<< HEAD
             0 => __DIR__ . '/../..' . '/WebSocket',
+=======
+            0 => __DIR__ . '/../..' . '/WebSocets',
+>>>>>>> e11180ef249c75f466041efa626d02f8a5f26448
         ),
         'BraintreeHttp\\' => 
         array (
@@ -179,9 +187,15 @@ class ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+<<<<<<< HEAD
             $loader->prefixLengthsPsr4 = ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4::$prefixesPsr0;
+=======
+            $loader->prefixLengthsPsr4 = ComposerStaticInit877204235c349c625595cbd746ae523a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit877204235c349c625595cbd746ae523a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit877204235c349c625595cbd746ae523a::$prefixesPsr0;
+>>>>>>> e11180ef249c75f466041efa626d02f8a5f26448
 
         }, null, ClassLoader::class);
     }
