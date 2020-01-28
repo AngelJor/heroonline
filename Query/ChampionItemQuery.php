@@ -38,4 +38,17 @@ class ChampionItemQuery
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);
         return $result;
     }
+    function displayAllChampionItem($championId){
+        $sth = $this->conn->prepare('
+                SELECT
+                    *
+                FROM
+                    champion_item
+                WHERE champion_id=:champion_id
+                ');
+        $sth->bindParam(':champion_id',$championId);
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

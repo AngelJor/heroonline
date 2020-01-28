@@ -283,16 +283,8 @@ class Champion
     {
         return $this->bossLvl;
     }
-    public function getBestItems(){
-
-        $query = new ItemQuery();
-        $championItemQuery = new ChampionItemQuery();
-        $bestBuff = 0;
-
-        $itemIds = $championItemQuery->getChampionItemId($this->getId());
-        foreach($itemIds as $key => $value){
-
-        }
-
+    public function display(){
+        $query = new ChampionItemQuery();
+        return $query->displayAllChampionItem($this->getId());
     }
 }

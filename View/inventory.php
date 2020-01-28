@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Shop</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="<?=_SERVER_PATH?>View/Style/myChampion.css">
+    <link rel="stylesheet" type="text/css" href="<?=_SERVER_PATH?>View/Style/shop.css">
 </head>
 <body>
-
-
 <ul class="nav nav-pills">
     <li class="nav-item">
         <a class="nav-link" href="<?=_SERVER_PATH?>champion/displayChampion">Home</a>
@@ -23,18 +22,7 @@
     <li class="nav-item log-out">
         <a class="nav-link" href="<?=_SERVER_PATH?>user/logout">Log out</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="<?=_SERVER_PATH?>battle/liveBattle">Start Live Battle</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="<?=_SERVER_PATH?>battle/bossFight">Go on a Mission</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="<?=_SERVER_PATH?>champion/render">Inventory</a>
-    </li>
 </ul>
-
-
 <div class="top">
     <div class="top-level">
         <table class="lvl">
@@ -51,14 +39,30 @@
             <tr>
                 <td>Money: <?php echo $params["champion"]["money"] ?></td>
             </tr>
-            <tr>
-                <td>Diamonds: <?php echo $params["champion"]["diamond"] ?></td>
-            </tr>
         </table>
     </div>
 </div>
+
 <div class="content">
+    <form class="shop" action="<?=_SERVER_PATH?>champion/selectItem" method="post">
+        <table class="myTableBg">
+            <?php
+            $counter = 1;
+            echo "<tr>";
+            foreach ($params["item"] as $key => $value){
+                echo self::renderPartial('partial/item.php', $value);
+                if($counter % 3 == 0){
+                    echo "</tr><tr>";
+                }
+                $counter++;
+            }
+            ?>
+        </table>
+        <button type="submit">Buy</button>
+    </form>
+
     <img class="avatarImg" src="<?php echo $params['mine'] ?>">
+
 </div>
 <div class="bottom">
     <table class="stats">
@@ -76,6 +80,5 @@
         </tr>
     </table>
 </div>
-
 </body>
 </html>

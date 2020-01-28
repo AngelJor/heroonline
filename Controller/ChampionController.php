@@ -52,4 +52,19 @@ class ChampionController
         $champ = new Champion($_SESSION["myChampId"]);
         $champ->buyDiamonds($_POST['diamonds']);
     }
+    public function selectItem(){
+        $item = new Item($_POST['item']);
+        $champ = new Champion($_SESSION['myChampId']);
+        $champ->setNewStats($item);
+    }
+    function render(){
+        //chamoion things
+        $champ = new Champion($_SESSION["myChampId"]);
+        $champVars = $champ->getChampionFields();
+
+        $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
+        //item things
+        $items = $champ->display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
+        WebResponse::render("../View/inventory.php",array('item'=>$items,'champion'=>$champVars,'mine'=>$mineAvatarPath));
+    }
 }
