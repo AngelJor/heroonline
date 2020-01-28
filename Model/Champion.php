@@ -21,6 +21,7 @@ class Champion
      protected $query;
      protected $iconId;
      protected $diamond;
+     protected $bossLvl;
 
     public function __construct($id = null)
     {
@@ -38,6 +39,7 @@ class Champion
             $this->lvl = $championData['lvl'];
             $this->iconId = $championData['icon_id'];
             $this->diamond = $championData['diamond'];
+            $this->bossLvl = $championData['boss_lvl'];
         }
     }
 
@@ -50,7 +52,8 @@ class Champion
             "xp" => $this->getXp(),
             "lvl" => $this->getLvl(),
             "armour" => $this->getArmourItem(),
-            "diamond" => $this->getDiamonds()
+            "diamond" => $this->getDiamonds(),
+            "bossLvl" => $this->getBossLvl()
         ];
         return $array;
     }
@@ -120,9 +123,6 @@ class Champion
         $this->strength = $strength;
     }
 
-    /**
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
@@ -271,5 +271,10 @@ class Champion
     public function buyDiamonds($diamonds){
         $query = new ChampionQuery();
         $query->buyDiamonds($diamonds + $this->getDiamonds(),$this->getId());
+    }
+
+    public function getBossLvl()
+    {
+        return $this->bossLvl;
     }
 }
