@@ -47,6 +47,7 @@
     <form class="shop" action="<?=_SERVER_PATH?>champion/selectItem" method="post">
         <table class="myTableBg">
             <?php
+            var_dump($params);
             $counter = 1;
             echo "<tr>";
             foreach ($params["item"] as $key => $value){

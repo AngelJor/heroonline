@@ -64,7 +64,12 @@ class ChampionController
 
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
         //item things
+        $query = new ItemQuery();
         $items = $champ->display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
-        WebResponse::render("../View/inventory.php",array('item'=>$items,'champion'=>$champVars,'mine'=>$mineAvatarPath));
+        $itemFields = [];
+        foreach($items as $key => $value){
+            $itemFields = $query->displayItem($value["item_id"]);
+        }
+        WebResponse::render("../View/inventory.php",array('item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
 }

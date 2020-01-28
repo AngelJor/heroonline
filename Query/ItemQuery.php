@@ -55,6 +55,18 @@ class ItemQuery extends AbstractQuery
                 FROM 
                     item 
                 ');
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    function displayItem($itemId){
+        $sth = $this->conn->prepare('
+                SELECT
+                    *
+                FROM
+                    item
+                WHERE item_id=:itemId
+                ');
         $sth->bindParam(':itemId',$itemId);
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);

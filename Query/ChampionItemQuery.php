@@ -41,7 +41,7 @@ class ChampionItemQuery
     function displayAllChampionItem($championId){
         $sth = $this->conn->prepare('
                 SELECT
-                    *
+                    item_id
                 FROM
                     champion_item
                 WHERE champion_id=:champion_id
