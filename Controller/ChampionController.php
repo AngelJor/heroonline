@@ -56,8 +56,9 @@ class ChampionController
         $item = new Item($_POST['item']);
         $champ = new Champion($_SESSION['myChampId']);
         $champ->setNewStats($item);
+        ChampionController::render();
     }
-    function render(){
+    static function render(){
         //chamoion things
         $champ = new Champion($_SESSION["myChampId"]);
         $champVars = $champ->getChampionFields();
@@ -68,8 +69,8 @@ class ChampionController
         $items = $champ->display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
         $itemFields = [];
         foreach($items as $key => $value){
-            $itemFields = $query->displayItem($value["item_id"]);
+            $itemFields[$key] = $query->displayItem($value["item_id"]);
         }
-        WebResponse::render("../View/inventory.php",array('item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
+        WebResponse::render("../View/inventory.php",array( 'item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
 }

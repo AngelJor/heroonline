@@ -41,6 +41,6 @@ class ShopController
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
         //item things
         $items = Shop::display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
-        WebResponse::render("../View/inventory.php",array('item'=>$items,'champion'=>$champVars,'mine'=>$mineAvatarPath));
+        WebResponse::render("../View/shop.php",array('item'=>$items,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
 }

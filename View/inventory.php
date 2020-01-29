@@ -47,25 +47,26 @@
     <form class="shop" action="<?=_SERVER_PATH?>champion/selectItem" method="post">
         <table class="myTableBg">
             <?php
-            var_dump($params);
             $counter = 1;
             echo "<tr>";
             foreach ($params["item"] as $key => $value){
-                echo self::renderPartial('partial/item.php', $value);
-                if($counter % 3 == 0){
-                    echo "</tr><tr>";
+                foreach($value as $k => $v) {
+                    echo self::renderPartial('partial/item.php', $v);
+                    if ($counter % 3 == 0) {
+                        echo "</tr><tr>";
+                    }
+                    $counter++;
                 }
-                $counter++;
             }
             ?>
         </table>
-        <button type="submit">Buy</button>
+        <button type="submit">Select Item</button>
     </form>
 
     <img class="avatarImg" src="<?php echo $params['mine'] ?>">
 
 </div>
-<div class="bottom">
+<div class="bottom" style="float: right">
     <table class="stats">
         <tr>
             <th>Health:</th>
