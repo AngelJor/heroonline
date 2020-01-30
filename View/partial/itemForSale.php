@@ -7,7 +7,7 @@
                     Type: <?=$params["type"]?><br />
                     Price: <?=$params["price"]?>
             </span>
-            <input class="hidden" id="myHiddenButton<?=$params["item_id"]?>" type="radio" name="item" value="<?=$params["item_id"]?>">
+            <input class="hidden" id="myHiddenButton<?=$params["item_id"]?>" type="radio" name="pair" value="<?=$params["pair_id"]?>">
             <img src="<?=$params["item_icon_path"]?>" alt="Select Item">
         </label>
     </div>

@@ -53,7 +53,8 @@ class ChampionController
         $champ->buyDiamonds($_POST['diamonds']);
     }
     public function selectItem(){
-        $item = new Item($_POST['item']);
+        $query = new ChampionItemQuery();
+        $item = new Item($query->getItemIdByPair($_POST["pair"])[0]["item_id"]);
         $champ = new Champion($_SESSION['myChampId']);
         $champ->setNewStats($item);
         ChampionController::render();
@@ -68,9 +69,22 @@ class ChampionController
         $query = new ItemQuery();
         $items = $champ->display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
         $itemFields = [];
-        foreach($items as $key => $value){
-            $itemFields[$key] = $query->displayItem($value["item_id"]);
+        foreach($items as $key => $value) {
+            $item = $query->displayItem($value["item_id"]);
+            $item[0] += ["pair_id" => $value['pair_id']];
+            $itemFields[$key] = $item;
+
         }
-        WebResponse::render("../View/inventory.php",array( 'item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
+        WebResponse::render("../View/inventory.php",array('item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
+    }
+    public function sellItem(){
+        $query = new ChampionItemQuery();
+        $item = new Item($query->getItemIdByPair($_POST["pair"])[0]["item_id"]);
+        $itemQuery = new ItemQuery();
+        $championItemQuery = new ChampionItemQuery();
+        $championItemQuery->removeItem($_POST['pair']);
+        $itemQuery->addItemForSell($_SESSION["myChampId"],$item->getId(),$item->getPrice() * 0.75);
+
+        ChampionController::render();
     }
 }

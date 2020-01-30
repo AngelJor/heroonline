@@ -44,14 +44,14 @@
 </div>
 
 <div class="content">
-    <form class="shop" action="<?=_SERVER_PATH?>champion/selectItem" method="post">
+    <form class="shop" id="table" method="post">
         <table class="myTableBg">
             <?php
             $counter = 1;
             echo "<tr>";
             foreach ($params["item"] as $key => $value){
                 foreach($value as $k => $v) {
-                    echo self::renderPartial('partial/item.php', $v);
+                    echo self::renderPartial('partial/itemForSale.php', $v);
                     if ($counter % 3 == 0) {
                         echo "</tr><tr>";
                     }
@@ -60,7 +60,8 @@
             }
             ?>
         </table>
-        <button type="submit">Select Item</button>
+        <button id="SelectItem">Select Item</button>
+        <button id="SellItem">Sell Item</button>
     </form>
 
     <img class="avatarImg" src="<?php echo $params['mine'] ?>">
@@ -83,4 +84,15 @@
     </table>
 </div>
 </body>
+<script>
+    $('#SelectItem').click(function(){
+        $('#table').attr('action', '<?=_SERVER_PATH?>champion/selectItem');
+        $('#table').submit();
+    });
+    $('#SellItem').click(function(){
+        $('#table').attr('action', '<?=_SERVER_PATH?>champion/sellItem');
+        $('#table').submit();
+        alert("You put your item for sell for 75% of it original price");
+    });
+</script>
 </html>

@@ -41,12 +41,36 @@ class ChampionItemQuery
     function displayAllChampionItem($championId){
         $sth = $this->conn->prepare('
                 SELECT
-                    item_id
+                    item_id,pair_id
                 FROM
                     champion_item
                 WHERE champion_id=:champion_id
                 ');
         $sth->bindParam(':champion_id',$championId);
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    function removeItem($pairId){
+        $sth = $this->conn->prepare('
+            DELETE FROM
+                champion_item
+            WHERE
+                 pair_id=:pair_id
+        ');
+        $sth->bindParam("pair_id",$pairId);
+        $sth->execute();
+    }
+    function getItemIdByPair($pairId){
+        $sth = $this->conn->prepare('
+                SELECT
+                    item_id
+                FROM
+                    champion_item
+                WHERE
+                    pair_id=:pair_id
+                ');
+        $sth->bindParam(':pair_id',$pairId);
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;

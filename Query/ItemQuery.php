@@ -72,4 +72,16 @@ class ItemQuery extends AbstractQuery
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    function addItemForSell($sellerId,$itemId,$price){
+        $sth = $this->conn->prepare('
+                INSERT INTO
+                    item_sell(item_id,user_id,price)
+                VALUES
+                    (:item_id,:user_id,:price)
+                ');
+        $sth->bindParam(':item_id',$itemId);
+        $sth->bindParam(':user_id',$sellerId);
+        $sth->bindParam(':price',$price);
+        $sth->execute();
+    }
 }

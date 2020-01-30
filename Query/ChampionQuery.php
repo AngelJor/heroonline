@@ -201,19 +201,6 @@ class ChampionQuery extends AbstractQuery
         $result = $sth->fetch(PDO::FETCH_COLUMN);
         return $result;
     }
-    public function setConnection($connNum,$championId){
-        $sth = $this->conn->prepare("
-                    UPDATE
-                        champion
-                    SET
-                        connection_number=:connection_number
-                    WHERE
-                        champion_id=:champion_id
-                    ");
-        $sth->bindParam("champion_id",$championId);
-        $sth->bindParam("connection_number",$connNum);
-        $sth->execute();
-    }
     public function setAvatar($avatarId,$user_id,$isFacebookUser){
         if($isFacebookUser == 0) {
             $sth = $this->conn->prepare("
