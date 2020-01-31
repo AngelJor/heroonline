@@ -7,6 +7,10 @@ class Shop
         $query = new ItemQuery();
         return $query->display();
     }
+    static function displayItemForSale(){
+        $query = new ItemQuery();
+        return $query->displayItemForSale();
+    }
     function buy($championId, $itemId)
     {
         $item = new Item($itemId);

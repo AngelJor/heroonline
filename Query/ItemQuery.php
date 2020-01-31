@@ -84,4 +84,40 @@ class ItemQuery extends AbstractQuery
         $sth->bindParam(':price',$price);
         $sth->execute();
     }
+    function displayItemForSale(){
+        /** @noinspection SqlResolve */
+        $sth = $this->conn->prepare('
+                SELECT
+                    *
+                FROM
+                    item_sell
+                ');
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    function getItemByPair($pairId){
+        $sth = $this->conn->prepare('
+                SELECT
+                    *
+                FROM
+                    item_sell
+                WHERE
+                    pair_id =:pairId
+                ');
+        $sth->bindParam(":pairId", $pairId);
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    function removeItem($pairId){
+        $sth = $this->conn->prepare('
+            DELETE FROM
+                item_sell
+            WHERE
+                 pair_id=:pair_id
+        ');
+        $sth->bindParam("pair_id",$pairId);
+        $sth->execute();
+    }
 }

@@ -67,7 +67,7 @@ class ChampionController
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
         //item things
         $query = new ItemQuery();
-        $items = $champ->display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
+        $items = $champ->display();
         $itemFields = [];
         foreach($items as $key => $value) {
             $item = $query->displayItem($value["item_id"]);
