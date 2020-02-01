@@ -34,21 +34,19 @@ class ShopController
         $champ = new Champion($query->getItemByPair($_POST["pair"])[0]["user_id"]);
 
         $this->shop->buy($_SESSION['myChampId'],$item->getId());
-        $champ->setMoney($champ->getMoney() + $item->getPrice() * 0.75);
+        $champ->setMoney($champ->getMoney() + $query->getItemByPair($_POST["pair"])[0]["price"]);
         $champ->saveMoneyToDb();
-        var_dump($champ->getMoney());
         $query->removeItem($_POST['pair']);
 
         $this->renderChampionShop();
     }
     function  render(){
-        //chamoion things
         $champ = new Champion($_SESSION["myChampId"]);
         $champVars = $champ->getChampionFields();
 
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
-        //item things
-        $items = Shop::display(); //twa wrushrta masiv ot itemi -> cqlata shibana baza btw
+
+        $items = Shop::display();
         WebResponse::render("../View/shop.php",array('item'=>$items,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
     function renderChampionShop(){
