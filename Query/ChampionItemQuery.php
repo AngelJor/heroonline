@@ -14,14 +14,15 @@ class ChampionItemQuery
         $this->conn = ConnectionDb::getInstance();
     }
 
-    public function addItem($itemId,$championId){
+    public function addItem($itemId,$championId,$price){
         $sth = $this->conn->prepare('
             INSERT INTO 
-                champion_item(item_id, champion_id)
-            VALUES (:itemId,:championId)
+                champion_item(item_id, champion_id,bought_price)
+            VALUES (:itemId,:championId,:boughtPrice)
         ');
         $sth->bindParam("itemId",$itemId);
         $sth->bindParam("championId",$championId);
+        $sth->bindParam("boughtPrice",$price);
         $sth->execute();
     }
     public  function getChampionItemId($championId){
@@ -64,7 +65,7 @@ class ChampionItemQuery
     function getItemIdByPair($pairId){
         $sth = $this->conn->prepare('
                 SELECT
-                    item_id
+                    *
                 FROM
                     champion_item
                 WHERE

@@ -19,13 +19,13 @@ class ShopController
     function buy(){
         $item = (int)$_POST['item'] ?? '';
         $myChampId = (int)$_SESSION['myChampId'] ?? '';
-
+        $itemObj = new Item($item);
         if(empty($item)
         ||empty($myChampId)
         ){
             echo 'error'; die();
         }
-        $this->shop->buy($myChampId,$item);
+        $this->shop->buy($myChampId,$item,$itemObj->getPrice());
         self:$this->render();
     }
     function buyFromOtherChampion(){
@@ -33,7 +33,7 @@ class ShopController
         $item = new Item($query->getItemByPair($_POST["pair"])[0]["item_id"]);
         $champ = new Champion($query->getItemByPair($_POST["pair"])[0]["user_id"]);
 
-        $this->shop->buy($_SESSION['myChampId'],$item->getId());
+        $this->shop->buy($_SESSION['myChampId'],$item->getId(),$query->getItemByPair($_POST["pair"])[0]["price"]);
         $champ->setMoney($champ->getMoney() + $query->getItemByPair($_POST["pair"])[0]["price"]);
         $champ->saveMoneyToDb();
         $query->removeItem($_POST['pair']);

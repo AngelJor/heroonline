@@ -11,7 +11,7 @@ class Shop
         $query = new ItemQuery();
         return $query->displayItemForSale();
     }
-    function buy($championId, $itemId)
+    function buy($championId, $itemId,$price)
     {
         $item = new Item($itemId);
         $champion = new Champion($championId);
@@ -20,7 +20,7 @@ class Shop
             $champion->setMoney($champion->getMoney() - $item->getPrice());
             $champion->saveMoneyToDb();
             $champion->setNewStats($item);
-            $itemQuery->addItem($item->getId(),$champion->getId());
+            $itemQuery->addItem($item->getId(),$champion->getId(),$price);
             return 1;
         } else {
             return 0;

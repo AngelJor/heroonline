@@ -67,13 +67,13 @@ class ChampionController
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
         //item things
         $query = new ItemQuery();
+        $championQuery = new ChampionItemQuery();
         $items = $champ->display();
         $itemFields = [];
         foreach($items as $key => $value) {
             $item = $query->displayItem($value["item_id"]);
             $item[0] += ["pair_id" => $value['pair_id']];
             $itemFields[$key] = $item;
-
         }
         WebResponse::render("../View/inventory.php",array('item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
@@ -82,9 +82,8 @@ class ChampionController
         $item = new Item($query->getItemIdByPair($_POST["pair"])[0]["item_id"]);
         $itemQuery = new ItemQuery();
         $championItemQuery = new ChampionItemQuery();
+        $itemQuery->addItemForSell($_SESSION["myChampId"],$item->getId(),$query->getItemIdByPair($_POST["pair"])[0]["bought_price"] * 0.75);
         $championItemQuery->removeItem($_POST['pair']);
-        $itemQuery->addItemForSell($_SESSION["myChampId"],$item->getId(),$item->getPrice() * 0.75);
-
         ChampionController::render();
     }
 }
