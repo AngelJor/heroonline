@@ -28,10 +28,10 @@ class ChampionQuery extends AbstractQuery
             /** @noinspection SqlResolve */
             $sth = $this->conn->prepare('
             INSERT INTO 
-                champion(name,health,strength,money,armour_item,xp,lvl,user_id,diamond,facebook_user_id) 
+                champion(name,health,strength,money,armour_item,xp,lvl,user_id,diamond,facebook_user_id,boss_lvl)
             VALUES 
                 (:name, 100, 10, 0,
-                 0,0, 1,:id,0,0)
+                 0,0, 1,:id,0,0,1)
             ');
         $sth->bindParam(':id',$userId);
         $sth->bindParam(':name', $name);
@@ -43,10 +43,10 @@ class ChampionQuery extends AbstractQuery
         /** @noinspection SqlResolve */
         $sth = $this->conn->prepare('
             INSERT INTO 
-                champion(name,health,strength,money,armour_item,xp,lvl,user_id,diamond,facebook_user_id) 
+                champion(name,health,strength,money,armour_item,xp,lvl,user_id,diamond,facebook_user_id,boss_lvl)
             VALUES 
                 (:name, 100, 10, 0,
-                 0,0, 1,0,0,:id)
+                 0,0, 1,0,0,:id,1)
             ');
         $sth->bindParam(':id',$userId);
         $sth->bindParam(':name', $name);

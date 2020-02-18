@@ -20,7 +20,7 @@
 
 
     function checkLoginState() {               // Called when a person is finished with the Login Button.
-        FB.getLoginStatus(function(response) {   // See the onlogin handler
+        FB.getLoginStatus(function(response) {
             statusChangeCallback(response);
         });
     }
@@ -31,7 +31,7 @@
             appId      : '2373604422952041',
             cookie     : true,                     // Enable cookies to allow the server to access the session.
             xfbml      : true,                     // Parse social plugins on this webpage.
-            version    : 'v5.0'           // Use this Graph API version for this call.
+            version    : 'v5.0'                    // Use this Graph API version for this call.
         });
 
 
@@ -50,7 +50,7 @@
     }(document, 'script', 'facebook-jssdk'));
 
 
-    function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    function testAPI() {
         FB.api('/me', function(response) {
             sendInfo(response);
         });

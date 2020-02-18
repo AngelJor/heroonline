@@ -28,9 +28,9 @@
         <button id="DmgSpell" class="btn btn-warning" name="dmgSpell" type="submit" value="dmgSpell">DmgSpell</button>
         <input class="battleId" hidden name="battleId" value="<?php  echo $params['battleId'] ?>">
     </div>
-        <form class="return-form" action="<?=_SERVER_PATH?>champion/displayChampion" method="post">
-            <button id="Return" class="btn btn-warning return"  type="submit">Return to main Menu</button>
-        </form>
+    <form class="return-form" action="<?=_SERVER_PATH?>champion/displayChampion" method="post">
+        <button id="Return" class="btn btn-warning return"  type="submit">Return to main Menu</button>
+    </form>
 </div>
 
 <div class="battle-area">
@@ -103,35 +103,35 @@
         $(document).ready(function() {
             var battleId = $(".battleId").val();
             $.ajax({
-            type: "POST",
-            url: "http://localhost/heroonline/public/index.php?target=battle&action=attack",
-            dataType: "JSON",
-            data: {Attack:value,battleId:battleId},
-            success: function(result) {
-                var isBattleOver = result.round[result.round.length - 1].battleOver;
-                if (isBattleOver) {
-                    alert("Battle is over!");
-                    $('#Return').css('display','block');
-                    $('.Moves').css('display','none');
-                } else {
-                    for (var roundNumber in result['round']) {
-                        var roundData = result['round'][roundNumber];
-                        switch (roundData.Move) {
-                            case "Heal":
-                                $('#round-log' + roundNumber).replaceWith('<div id="round-log' + roundNumber + '">' + roundData.AttackerName + " used his heal spell and heal for " + roundData.HealingDone + '</div>');
-                                $('#' + roundData.Attacker).css('width', roundData.AttackerHealth / roundData.AttackerMaxHealth * 100 + '%');
-                                break;
-                            case "dmgSpell":
-                                $('#round-log' + roundNumber).replaceWith('<div id="round-log' + roundNumber + '">' + roundData.AttackerName + " used his damage spell and made " + roundData.SpellDmgDone + " and left his opponent with " + roundData.DefenderHealthLeft + '</div>');
-                                $('#' + roundData.Defender).css('width',  roundData.DefenderHealthLeft / roundData.DefenderMaxHealth * 100  + '%');
-                                break;
-                            case "Attack":
-                                $('#round-log' + roundNumber).replaceWith('<div id="round-log' + roundNumber + '">' + roundData.AttackerName + " used his basic attack and made " + roundData.DmgDealt + " and left his opponent with " + roundData.DefenderHealthLeft + '</div>');
-                                $('#' + roundData.Defender).css('width',  roundData.DefenderHealthLeft / roundData.DefenderMaxHealth * 100  + '%');
+                type: "POST",
+                url: "http://localhost/heroonline/public/index.php?target=battle&action=attack",
+                dataType: "JSON",
+                data: {Attack:value,battleId:battleId},
+                success: function(result) {
+                    var isBattleOver = result.round[result.round.length - 1].battleOver;
+                    if (isBattleOver) {
+                        alert("Battle is over!");
+                        $('#Return').css('display','block');
+                        $('.Moves').css('display','none');
+                    } else {
+                        for (var roundNumber in result['round']) {
+                            var roundData = result['round'][roundNumber];
+                            switch (roundData.Move) {
+                                case "Heal":
+                                    $('#round-log' + roundNumber).replaceWith('<div id="round-log' + roundNumber + '">' + roundData.AttackerName + " used his heal spell and heal for " + roundData.HealingDone + '</div>');
+                                    $('#' + roundData.Attacker).css('width', roundData.AttackerHealth / roundData.AttackerMaxHealth * 100 + '%');
+                                    break;
+                                case "dmgSpell":
+                                    $('#round-log' + roundNumber).replaceWith('<div id="round-log' + roundNumber + '">' + roundData.AttackerName + " used his damage spell and made " + roundData.SpellDmgDone + " and left his opponent with " + roundData.DefenderHealthLeft + '</div>');
+                                    $('#' + roundData.Defender).css('width',  roundData.DefenderHealthLeft / roundData.DefenderMaxHealth * 100  + '%');
+                                    break;
+                                case "Attack":
+                                    $('#round-log' + roundNumber).replaceWith('<div id="round-log' + roundNumber + '">' + roundData.AttackerName + " used his basic attack and made " + roundData.DmgDealt + " and left his opponent with " + roundData.DefenderHealthLeft + '</div>');
+                                    $('#' + roundData.Defender).css('width',  roundData.DefenderHealthLeft / roundData.DefenderMaxHealth * 100  + '%');
+                            }
                         }
                     }
                 }
-            }
             });
         })
     }

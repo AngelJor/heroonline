@@ -11,9 +11,6 @@
 <body>
 <ul class="nav nav-pills">
     <li class="nav-item">
-        <a class="nav-link" href="../View/home.php">Home</a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link" href="../View/register.php">Sign In</a>
     </li>
     <li class="nav-item">

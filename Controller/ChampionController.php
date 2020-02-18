@@ -67,7 +67,6 @@ class ChampionController
         $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($_SESSION["myChampId"]));
         //item things
         $query = new ItemQuery();
-        $championQuery = new ChampionItemQuery();
         $items = $champ->display();
         $itemFields = [];
         foreach($items as $key => $value) {
@@ -85,5 +84,29 @@ class ChampionController
         $itemQuery->addItemForSell($_SESSION["myChampId"],$item->getId(),$query->getItemIdByPair($_POST["pair"])[0]["bought_price"] * 0.75);
         $championItemQuery->removeItem($_POST['pair']);
         ChampionController::render();
+    }
+    public function joinQueue(){
+        require '../vendor/autoload.php';
+
+
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+        $pusher = new Pusher\Pusher(
+            '13a59caadb0b5a66bbe0',
+            'f54808eafb8c70e08d74',
+            '949833',
+            $options
+        );
+
+        $lobbyQuery = new LobbyQuery();
+
+        $data['message'] = "You successfully joined a queue";
+        $pusher->trigger('queue', 'joinQueue', $data['message']);
+        $lobbyQuery->joinLobby($_SESSION["myChampId"]);
+        if($lobbyQuery->usersInLobby() == 2){
+            $pusher->trigger('queue','enterBattle',[]);
+        }
     }
 }

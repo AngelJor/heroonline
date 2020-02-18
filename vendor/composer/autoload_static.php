@@ -4,11 +4,7 @@
 
 namespace Composer\Autoload;
 
-<<<<<<< HEAD
 class ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4
-=======
-class ComposerStaticInit877204235c349c625595cbd746ae523a
->>>>>>> e11180ef249c75f466041efa626d02f8a5f26448
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -18,6 +14,7 @@ class ComposerStaticInit877204235c349c625595cbd746ae523a
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
 
@@ -46,6 +43,7 @@ class ComposerStaticInit877204235c349c625595cbd746ae523a
         ),
         'P' => 
         array (
+            'Pusher\\' => 7,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'PayPalCheckoutSdk\\' => 18,
@@ -57,10 +55,6 @@ class ComposerStaticInit877204235c349c625595cbd746ae523a
         'F' => 
         array (
             'Facebook\\' => 9,
-        ),
-        'C' => 
-        array (
-            'Chat\\' => 5,
         ),
         'B' => 
         array (
@@ -133,6 +127,10 @@ class ComposerStaticInit877204235c349c625595cbd746ae523a
         array (
             0 => __DIR__ . '/..' . '/cboden/ratchet/src/Ratchet',
         ),
+        'Pusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -152,14 +150,6 @@ class ComposerStaticInit877204235c349c625595cbd746ae523a
         'Facebook\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
-        ),
-        'Chat\\' => 
-        array (
-<<<<<<< HEAD
-            0 => __DIR__ . '/../..' . '/WebSocket',
-=======
-            0 => __DIR__ . '/../..' . '/WebSocets',
->>>>>>> e11180ef249c75f466041efa626d02f8a5f26448
         ),
         'BraintreeHttp\\' => 
         array (
@@ -187,15 +177,9 @@ class ComposerStaticInit877204235c349c625595cbd746ae523a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-<<<<<<< HEAD
             $loader->prefixLengthsPsr4 = ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitdd8a79fbbb5a3eeb07f8cdd63392e9c4::$prefixesPsr0;
-=======
-            $loader->prefixLengthsPsr4 = ComposerStaticInit877204235c349c625595cbd746ae523a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit877204235c349c625595cbd746ae523a::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit877204235c349c625595cbd746ae523a::$prefixesPsr0;
->>>>>>> e11180ef249c75f466041efa626d02f8a5f26448
 
         }, null, ClassLoader::class);
     }

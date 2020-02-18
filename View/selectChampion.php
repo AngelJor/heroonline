@@ -18,5 +18,6 @@
     ?>
     <input type="submit" name= "Select" value= "Select"/>
 </form>
+<button onclick="window.location.href = '<?=_SERVER_PATH?>user/renderSelectIcon';">Create new champion</button>
 </body>
 </html>

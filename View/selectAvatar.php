@@ -6,7 +6,7 @@
 <body>
 
 <form action="<?=_SERVER_PATH?>user/selectAvatar" method="post">
-    <h1>Choose your Champion Icon</h1>
+    <h1>Choose your Champion Avatar</h1>
     <?php
     foreach ($params['avatars'] as $key => $value) {
         echo '
