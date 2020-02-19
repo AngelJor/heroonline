@@ -94,6 +94,9 @@ class BattleController
             $options
         );
 
+        $msg = "You have successfully entered a battle";
+        $pusher->trigger('queue','battle',$msg);
+
         $lobbyQuery = new LobbyQuery();
         $users = $lobbyQuery->getUserId();
 
@@ -112,16 +115,13 @@ class BattleController
         $mine = new Champion($hero1Id);
         $enemy = new Champion($hero2Id);
         $battleId = $this->battle->createBattle($hero1Id, $hero2Id);
-//        WebResponse::renderPartial("../View/onlineBattle.php",array('battleId' => $battleId,'enemy' => $opponentAvatarPath,
-//            'mine' => $mineAvatarPath,'player1'=>$myId,
-//            'player2'=> $opponentId,'mineHeal'=>$mineHealPower["power"],
-//            'mineDmg'=>$mineDmgPower["power"],
-//            'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],
-//            'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
-//            'mineStrength'=>$mine->getStrength(),'enemyStrength'=>$enemy->getStrength(),
-//            'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
-
-        $msg = "You have successfully entered a battle";
-        $pusher->trigger('queue','battle',$msg);
+        WebResponse::renderPartial("../View/partial/onlineBattle.php",array('battleId' => $battleId,'enemy' => $opponentAvatarPath,
+            'mine' => $mineAvatarPath,'player1'=>$myId,
+            'player2'=> $opponentId,'mineHeal'=>$mineHealPower["power"],
+            'mineDmg'=>$mineDmgPower["power"],
+            'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],
+            'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
+            'mineStrength'=>$mine->getStrength(),'enemyStrength'=>$enemy->getStrength(),
+            'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
     }
 }

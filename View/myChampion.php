@@ -34,7 +34,7 @@
         <a class="nav-link" href="<?=_SERVER_PATH?>shop/renderChampionShop">Offers from other Champions</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="<?=_SERVER_PATH?>champion/joinQueue">Start Live Battle</a>
+        <a class="nav-link" href="http://localhost/heroonline/View/onlineBattle.php">Start Live Battle</a>
     </li>
 </ul>
 

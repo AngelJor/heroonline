@@ -102,8 +102,6 @@ class ChampionController
         );
 
         $lobbyQuery = new LobbyQuery();
-        WebResponse::render("../View/onlineBattle.php");
-
         $lobbyQuery->joinLobby($_SESSION["myChampId"]);
         if($lobbyQuery->usersInLobby() == self::MAX_CHAMPIONS_IN_LOBBY){ //iznesi go na konstanta twa 2 che geri shte te bie
             $pusher->trigger('queue','enterBattle',[]);

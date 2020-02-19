@@ -7,7 +7,7 @@
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 </head>
 
-<body>
+<body onload="joinQueue()">
 <p>zdr</p>
 <div id="container">
     <div id="champion1">
@@ -27,19 +27,24 @@
     });
     var queue = pusher.subscribe('queue');
     //tuk sa wsichki pusher triguri
-    queue.bind('battle', function(data) {
-        alert(JSON.stringify(data));
-    });
 
+    function joinQueue(){
+        $.ajax({
+            url: "http://localhost/heroonline/public/index.php?target=champion&action=joinQueue"
+        });
+    }
     queue.bind('enterBattle',function(){
         $.ajax({
             url: "http://localhost/heroonline/public/index.php?target=battle&action=enterBattle",
             success:function(result){
                 //tuk shte izwikwa jquery koeto da replecwa chasti ot nowata stranica a imenno shte replacene loadura s in
                 //foto za geroite chrez renderPartial
-                $("div").replaceWith("Hello World");
+                alert(result);
             }
         });
+    });
+    queue.bind('battle',function(data){
+        alert(JSON.stringify(data));
     });
 </script>
 
