@@ -1,6 +1,5 @@
 
-<div id="round-log0"></div>
-<div id="round-log1">Les`s the battle begin</div>
+<div id="round-log0">Les`s the battle begin</div>
 
 <div class="progress">
     <div>
@@ -17,8 +16,9 @@
         <button id="Heal" class="btn btn-success" name="Heal" type="submit" value="Heal">Heal</button>
         <button id="DmgSpell" class="btn btn-warning" name="dmgSpell" type="submit" value="dmgSpell">DmgSpell</button>
         <input class="battleId" hidden name="battleId" value="<?php  echo $params['battleId'] ?>">
+        <input class="myId" hidden name="myId" value="<?php  echo $params['player1'] ?>">
     </div>
-    <form class="return-form" action="<?=_SERVER_PATH?>champion/displayChampion" method="post">
+    <form class="return-form" action="<?=_SERVER_PATH?>champion/leaveQueue" method="post">
         <button id="Return" class="btn btn-warning return"  type="submit">Return to main Menu</button>
     </form>
 </div>
@@ -82,3 +82,8 @@
 
     </div>
 </div>
+<script>
+    document.getElementById("Attack").onclick = function() {sendParams(document.getElementById("Attack").value)};
+    document.getElementById("Heal").onclick = function() {sendParams(document.getElementById("Heal").value)};
+    document.getElementById("DmgSpell").onclick = function() {sendParams(document.getElementById("DmgSpell").value)};
+</script>

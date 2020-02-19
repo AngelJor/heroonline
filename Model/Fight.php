@@ -31,7 +31,6 @@ class Fight
             $defender = new Champion($myChampId);
         }
         $battleQuery->create($attacker->getId(), $defender->getId());
-        return $battleQuery->getId($attacker->getId(), $defender->getId());
     }
     function battle(Champion $attacker, Champion $defender,$attackWay)
     {
@@ -125,7 +124,7 @@ class Fight
                         $championQuery->lvlUp(0,
                             $attacker->getLvl() + 1,
                             $attacker->getStrength() + Champion::BASE_DMG_MODIFIER,
-                            $attacker->getMaxHealth(),
+                            $attacker->getMaxHealth() + Champion::BASE_HEALTH_MODIFIER,
                             $attacker->getId());
                     }
                 }

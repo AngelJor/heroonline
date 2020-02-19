@@ -48,7 +48,6 @@ class BattleQuery
         $sth->bindParam(':defenderId',$defenderId);
         $sth->execute();
         $result = $sth->fetch(PDO::FETCH_ASSOC);
-        //var_dump($result);
         foreach ($result as $key => $value) {
             return (int)$result[$key];
         }

@@ -41,6 +41,12 @@ class ChampionController
     public function selectOpponent(){
         WebResponse::render("..\View\selectOpponent.php",array('champions' => Champion::listAllChampions()));
     }
+    public function leaveQueue(){
+        $query = new LobbyQuery();
+        $query->exitLobby();
+        self:self::displayChampion();
+        unset($_SESSION['battleId']);
+    }
     public static function displayChampion(){
         $champ = new Champion($_SESSION["myChampId"]);
         $champVars = $champ->getChampionFields();
@@ -104,7 +110,20 @@ class ChampionController
         $lobbyQuery = new LobbyQuery();
         $lobbyQuery->joinLobby($_SESSION["myChampId"]);
         if($lobbyQuery->usersInLobby() == self::MAX_CHAMPIONS_IN_LOBBY){ //iznesi go na konstanta twa 2 che geri shte te bie
-            $pusher->trigger('queue','enterBattle',[]);
+            $battle = new Fight();
+            $lobbyQuery = new LobbyQuery();
+            $users = $lobbyQuery->getUserId();
+            $myId = $_SESSION['myChampId'];
+            if($myId == $users[0]['user1_id']){
+                $opponentId = (int)$users[1]['user1_id'];
+                $battle->createBattle($myId, $opponentId);
+                $pusher->trigger('queue','enterBattle',[]);
+            }
+            else{
+                $opponentId = (int)$users[0]['user1_id'];
+                $battle->createBattle($myId, $opponentId);
+                $pusher->trigger('queue','enterBattle',[]);
+            }
         }
     }
 }
