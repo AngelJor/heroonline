@@ -36,6 +36,15 @@
     queue.bind('battle',function(data){
         alert(JSON.stringify(data));
     });
+    queue.bind('attacker',function(data){
+        if(data == $('.myId').val()){
+            $('.Moves').css('display','block');
+        }
+        else {
+            $('.Moves').css('display','none');
+        }
+
+    });
     queue.bind('attack',function(result){
         var isBattleOver = result.round[result.round.length - 1].battleOver;
         if (isBattleOver) {
