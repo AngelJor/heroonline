@@ -34,7 +34,7 @@
         <a class="nav-link" href="<?=_SERVER_PATH?>shop/renderChampionShop">Offers from other Champions</a>
     </li>
     <li class="nav-item">
-        <button class="nav-link" onclick="joinQueue()">Start Live Battle</button>
+        <a class="nav-link" href="<?=_SERVER_PATH?>champion/joinQueue">Start Live Battle</a>
     </li>
 </ul>
 
@@ -80,35 +80,5 @@
         </tr>
     </table>
 </div>
-
 </body>
 </html>
-<script>
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('13a59caadb0b5a66bbe0', {
-        cluster: 'eu',
-        forceTLS: true
-    });
-    var queue = pusher.subscribe('queue');
-
-
-    queue.bind('joinQueue', function(data) {
-        alert(JSON.stringify(data));
-    });
-    queue.bind('enterBattle',function(){
-        $.ajax({
-            url: "http://localhost/heroonline/public/index.php?target=battle&action=enterBattle",
-            success:function(result){
-                document.open();
-                document.write("");
-            }
-        });
-    });
-    function joinQueue(){
-        $.ajax({
-            url: "http://localhost/heroonline/public/index.php?target=champion&action=joinQueue"
-        });
-    }
-</script>

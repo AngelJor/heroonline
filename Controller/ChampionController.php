@@ -1,8 +1,9 @@
 <?php
 
-
 class ChampionController
 {
+    const MAX_CHAMPIONS_IN_LOBBY = 2;
+
     public function addSpell(){
         $healthSellId = (int)$_POST['healthSpellId'] ?? '';
         $dmgSpellId = (int)$_POST['dmgSpellId'] ?? '';
@@ -101,11 +102,10 @@ class ChampionController
         );
 
         $lobbyQuery = new LobbyQuery();
+        WebResponse::render("../View/onlineBattle.php");
 
-        $data['message'] = "You successfully joined a queue";
-        $pusher->trigger('queue', 'joinQueue', $data['message']);
         $lobbyQuery->joinLobby($_SESSION["myChampId"]);
-        if($lobbyQuery->usersInLobby() == 2){
+        if($lobbyQuery->usersInLobby() == self::MAX_CHAMPIONS_IN_LOBBY){ //iznesi go na konstanta twa 2 che geri shte te bie
             $pusher->trigger('queue','enterBattle',[]);
         }
     }
