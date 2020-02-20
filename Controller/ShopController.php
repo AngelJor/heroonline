@@ -28,6 +28,10 @@ class ShopController
         $this->shop->buy($myChampId,$item,$itemObj->getPrice());
         self:$this->render();
     }
+    function buyBuff($buffPrice){
+        $shop = new Shop();
+        $shop->buyBuff($buffPrice);
+    }
     function buyFromOtherChampion(){
         $query = new ItemQuery();
         $item = new Item($query->getItemByPair($_POST["pair"])[0]["item_id"]);

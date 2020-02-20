@@ -9,7 +9,7 @@
 </head>
 
 <body onload="joinQueue()">
-<p>zdr</p>
+<h1>You are waiting in a queue for a live battle prepare yourself.</h1>
 </body>
 <script>
     Pusher.logToConsole = true;

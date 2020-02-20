@@ -4,11 +4,29 @@
     <title>Battle Area</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/heroonline/vendor/facebook/graph-sdk/src/Facebook/autoload.php"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?=_SERVER_PATH?>View/Style/battle.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '2373604422952041',
+            cookie: true,                     // Enable cookies to allow the server to access the session.
+            xfbml: true,                     // Parse social plugins on this webpage.
+            version: 'v5.0'                    // Use this Graph API version for this call.
+        });
+    };
+    (function(d, s, id) {                      // Load the SDK asynchronously
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <div id="round-log0"></div>
 <div id="round-log1">Les`s the battle begin</div>
 
@@ -27,7 +45,9 @@
         <button id="Heal" class="btn btn-success" name="Heal" type="submit" value="Heal">Heal</button>
         <button id="DmgSpell" class="btn btn-warning" name="dmgSpell" type="submit" value="dmgSpell">DmgSpell</button>
         <input class="battleId" hidden name="battleId" value="<?php  echo $params['battleId'] ?>">
+        <input class="myId" hidden name="myId" value="<?php  echo $params['player1'] ?>">
     </div>
+    <button id="shareBtn" class="btn btn-success return">Share</button>
     <form class="return-form" action="<?=_SERVER_PATH?>champion/displayChampion" method="post">
         <button id="Return" class="btn btn-warning return"  type="submit">Return to main Menu</button>
     </form>
@@ -113,6 +133,7 @@
                         alert("Battle is over!");
                         $('#Return').css('display','block');
                         $('.Moves').css('display','none');
+                        $('#shareBtn').css('display','block');
                     } else {
                         for (var roundNumber in result['round']) {
                             var roundData = result['round'][roundNumber];
@@ -135,6 +156,14 @@
             });
         })
     }
+    document.getElementById('shareBtn').onclick = function() {
+        FB.ui({
+            display: 'popup',
+            method: 'share',
+            href: 'http://imperiaonline.org',
+            quote: 'Such an amazing game'
+        }, function(response){});
+    };
 </script>
 
 </html>

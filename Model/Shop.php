@@ -27,4 +27,9 @@ class Shop
         }
 
     }
+    function buyBuff($price){
+        $champQuery = new ChampionQuery();
+        $champ = new Champion($_SESSION['myChampId']);
+        $champQuery->buyDiamonds($champ->getDiamonds()-$price,$_SESSION['myChampId']);
+    }
 }

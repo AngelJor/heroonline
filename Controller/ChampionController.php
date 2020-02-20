@@ -126,4 +126,10 @@ class ChampionController
             }
         }
     }
+    function chooseBoost(){
+        $battleQuery = new BattleQuery();
+        $boosts = $battleQuery->getAllBoosts();
+
+        WebResponse::render('../View/chooseBuff.php',array("buff" => $boosts));
+    }
 }

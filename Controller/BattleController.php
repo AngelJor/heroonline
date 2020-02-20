@@ -14,6 +14,12 @@ class BattleController
     }
     function bossFight(){
         $battleQuery = new BattleQuery();
+        $buffId = empty($_POST['boostId']) ? 0 : $_POST['boostId'];
+        $buff = $battleQuery->getFieldsForBuff($buffId);
+        if(isset($buff[0]['price'])){
+            $shopController = new ShopController();
+            $shopController->buyBuff($buff[0]['price']);
+        }
         $championSpellQuery = new ChampionSpellQuery();
         $hero1Id = $_SESSION['myChampId'];
         $mine = new Champion($hero1Id);
@@ -28,7 +34,7 @@ class BattleController
         $this->battle->createBattle($hero1Id, $hero2Id);
         WebResponse::render("../View/battle.php",array('battleId' => $battleQuery->getId($hero1Id,$hero2Id),'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $mine->getBossLvl(),
             'mineHeal'=>$mineHealPower["power"],'mineDmg'=>$mineDmgPower["power"],'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
-            'mineStrength'=>$mine->getStrength(),'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
+            'mineStrength'=>$mine->getStrength() + $buff[0]['boost_buff'],'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
     }
     function startBattle(){
         $championSpellQuery = new ChampionSpellQuery();
@@ -94,12 +100,26 @@ class BattleController
         $attacker = new Champion($this->battle->getAttackerId($battleId));
         $defender = new Champion($this->battle->getDefenderId($battleId));
 
-        $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
+        $battleQuery = new BattleQuery();
 
-        if (! isset(current($result['round'])['battleOver'])) {
-            $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
+        if($battleQuery->getAttacker($battleId) == $_SESSION['myChampId']) {
+
+            $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
+
+            if (!isset(current($result['round'])['battleOver'])) {
+                $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
+            }
+            WebResponse::renderWithJson($result);
         }
-        WebResponse::renderWithJson($result);
+        else{
+
+            $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
+
+            if (!isset(current($result['round'])['battleOver'])) {
+                $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
+            }
+            WebResponse::renderWithJson($result);
+        }
     }
     function lobbyMembers(){
         $lobbyQuery = new LobbyQuery();

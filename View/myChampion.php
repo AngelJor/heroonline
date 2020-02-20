@@ -25,7 +25,7 @@
         <a class="nav-link" href="<?=_SERVER_PATH?>user/logout">Log out</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="<?=_SERVER_PATH?>battle/bossFight">Go on a Mission</a>
+        <a class="nav-link" href="<?=_SERVER_PATH?>champion/chooseBoost">Go on a Mission</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="<?=_SERVER_PATH?>champion/render">Inventory</a>

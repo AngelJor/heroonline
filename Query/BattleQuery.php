@@ -113,4 +113,28 @@ class BattleQuery
         $sth->bindParam(':state', $state);
         $sth->execute();
     }
+    function getAllBoosts(){
+        $sth = $this->conn->prepare('
+                SELECT
+                    *
+                FROM
+                    boost
+                ');
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    function getFieldsForBuff($buffId){
+        $sth = $this->conn->prepare('
+                SELECT
+                    *
+                FROM
+                    boost
+                WHERE boost_id=:buffId
+                ');
+        $sth->bindParam(':buffId',$buffId);
+        $sth->execute();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
