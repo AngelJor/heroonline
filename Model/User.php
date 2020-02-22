@@ -25,7 +25,7 @@ class User
 
     public static function loginWithFacebook($id){
         $query = new UsersQuery();
-        return $query->loginWithFacebook($id);
+        $query->loginWithFacebook($id);
     }
 
     public static function listFacebookChampions($myId){

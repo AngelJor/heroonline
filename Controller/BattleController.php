@@ -16,6 +16,7 @@ class BattleController
         $battleQuery = new BattleQuery();
         $buffId = empty($_POST['boostId']) ? 0 : $_POST['boostId'];
         $buff = $battleQuery->getFieldsForBuff($buffId);
+        $additionalDmg = empty($buff[0]['boost_buff']) ? 0 : $buff[0]['boost_buff'] ;
         if(isset($buff[0]['price'])){
             $shopController = new ShopController();
             $shopController->buyBuff($buff[0]['price']);
@@ -34,7 +35,7 @@ class BattleController
         $this->battle->createBattle($hero1Id, $hero2Id);
         WebResponse::render("../View/battle.php",array('battleId' => $battleQuery->getId($hero1Id,$hero2Id),'enemy' => $opponentAvatarPath,'mine' => $mineAvatarPath,'player1'=>$_SESSION["myChampId"],'player2'=> $mine->getBossLvl(),
             'mineHeal'=>$mineHealPower["power"],'mineDmg'=>$mineDmgPower["power"],'enemyHeal'=>$enemyHealPower["power"],'enemyDmg'=>$enemyDmgPower["power"],'mineHealth'=>$mine->getName(),'enemyHealth'=>$enemy->getName(),
-            'mineStrength'=>$mine->getStrength() + $buff[0]['boost_buff'],'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
+            'mineStrength'=>$mine->getStrength() + $additionalDmg,'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
     }
     function startBattle(){
         $championSpellQuery = new ChampionSpellQuery();
@@ -161,7 +162,8 @@ class BattleController
                 $enemyDmgPower = $championSpellQuery->getChampionSpellPower($opponentId,"Dmg");
                 $mine = new Champion($myId);
                 $enemy = new Champion($opponentId);
-                WebResponse::render("../View/partial/onlineBattle.php",array('battleId' => $battleQuery->getId($myId,$opponentId),'enemy' => $opponentAvatarPath,
+                WebResponse::render("../View/partial/onlineBattle.php",array('battleId' => $battleQuery->getId($myId,$opponentId)
+                ,'enemy' => $opponentAvatarPath,
                     'mine' => $mineAvatarPath,'player1'=>$myId,
                     'player2'=> $opponentId,'mineHeal'=>$mineHealPower["power"],
                     'mineDmg'=>$mineDmgPower["power"],

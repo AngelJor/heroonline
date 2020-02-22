@@ -36,6 +36,9 @@
     <li class="nav-item">
         <a class="nav-link" href="http://localhost/heroonline/View/onlineBattle.php">Start Live Battle</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="http://localhost/heroonline/View/transactions.php">Buy diamonds</a>
+    </li>
 </ul>
 
 

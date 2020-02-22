@@ -4,7 +4,7 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../View/Style/login.css">
-    <script type="text/javascript" src="/vendor/facebook/graph-sdk/src/Facebook/autoload.php"></script>
+    <script type="text/javascript" src="/heroonline/vendor/facebook/graph-sdk/src/Facebook/autoload.php"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>

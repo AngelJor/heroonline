@@ -40,7 +40,8 @@ class UserController
         $_SESSION['isFacebookUser'] = $_POST['isFacebookUser'];
     }
     public static function renderSelectChampion(){
-        if ($_SESSION['isFacebookUser'] == 1){
+        $isFacebookUser = $_SESSION['isFacebookUser'] ?? '';
+        if ($isFacebookUser == 1){
             $champions = User::listFacebookChampions($_SESSION['myId']);
         }else{
             $champions = User::listUserChampions($_SESSION['myId']);
