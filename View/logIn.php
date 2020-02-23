@@ -4,7 +4,7 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../View/Style/login.css">
-    <script type="text/javascript" src="/heroonline/vendor/facebook/graph-sdk/src/Facebook/autoload.php"></script>
+    <script type="text/javascript" src="../vendor/facebook/graph-sdk/src/Facebook/autoload.php"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
@@ -56,15 +56,15 @@
         });
     }
     function sendInfo(data) {
-        $(document).ready(function () {
-            $.ajax({
-                type: "POST",
-                url: "http://localhost/heroonline/public/index.php?target=user&action=loginWithFacebook",
-                dataType: "JSON",
-                data: {facebookId:data['id'],isFacebookUser:1}
-            });
-            window.location.replace("http://localhost/heroonline/public/index.php?target=user&action=renderSelectChampion");
-        })
+        $.ajax({
+            type:"POST",
+            url: "https://heroonline.com/heroonline/public/index.php?target=user&action=loginWithFacebook",
+            data: {facebookId:data['id'],isFacebookUser:1},
+            success: function(){
+                alert("zdr");
+                window.location.replace("https://heroonline.com/heroonline/public/index.php?target=user&action=renderSelectChampion");
+            }
+        });
     }
 
 </script>
