@@ -60,9 +60,9 @@
                 $(document).ready(function () {
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/heroonline/public/index.php?target=champion&action=buyDiamonds",
+                        url: "https://heroonline.com/heroonline/public/index.php?target=champion&action=buyDiamonds",
                         dataType: "JSON",
-                        data: {diamonds:value},
+                        data: {diamonds:value}
                     });
                 })
             }

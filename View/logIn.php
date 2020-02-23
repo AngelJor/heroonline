@@ -61,7 +61,6 @@
             url: "https://heroonline.com/heroonline/public/index.php?target=user&action=loginWithFacebook",
             data: {facebookId:data['id'],isFacebookUser:1},
             success: function(){
-                alert("zdr");
                 window.location.replace("https://heroonline.com/heroonline/public/index.php?target=user&action=renderSelectChampion");
             }
         });

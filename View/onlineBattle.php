@@ -22,12 +22,12 @@
 
     function joinQueue(){
         $.ajax({
-            url: "http://localhost/heroonline/public/index.php?target=champion&action=joinQueue"
+            url: "https://heroonline.com/heroonline/public/index.php?target=champion&action=joinQueue"
         });
     }
     queue.bind('enterBattle',function(){
         $.ajax({
-            url: "http://localhost/heroonline/public/index.php?target=battle&action=enterBattle",
+            url: "https://heroonline.com/heroonline/public/index.php?target=battle&action=enterBattle",
             success:function(result){
                 $("body").replaceWith(result);
             }
@@ -81,7 +81,7 @@
             var battleId = $(".battleId").val();
             $.ajax({
                 type: "POST",
-                url: "http://localhost/heroonline/public/index.php?target=battle&action=onlineAttack",
+                url: "https://heroonline.com/heroonline/public/index.php?target=battle&action=onlineAttack",
                 dataType: "JSON",
                 data: {Attack:value,battleId:battleId}
             });

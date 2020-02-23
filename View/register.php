@@ -59,11 +59,12 @@
         $(document).ready(function () {
             $.ajax({
                 type: "POST",
-                url: "http://localhost/heroonline/public/index.php?target=user&action=facebookRegister",
-                dataType: "JSON",
-                data: {FacebookName:data['name'],facebookId:data['id'],isFacebookUser:1}
+                url: "https://heroonline/heroonline/public/index.php?target=user&action=facebookRegister",
+                data: {FacebookName:data['name'],facebookId:data['id'],isFacebookUser:1},
+                success: function(){
+                    window.location.replace("http://localhost/heroonline/public/index.php?target=user&action=renderSelectIcon");
+                }
             });
-            window.location.replace("http://localhost/heroonline/public/index.php?target=user&action=renderSelectIcon");
         })
     }
 

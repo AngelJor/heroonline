@@ -124,7 +124,7 @@
             var battleId = $(".battleId").val();
             $.ajax({
                 type: "POST",
-                url: "http://localhost/heroonline/public/index.php?target=battle&action=attack",
+                url: "https://heroonline.com/heroonline/public/index.php?target=battle&action=attack",
                 dataType: "JSON",
                 data: {Attack:value,battleId:battleId},
                 success: function(result) {
