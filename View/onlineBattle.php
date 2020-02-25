@@ -9,7 +9,9 @@
 </head>
 
 <body onload="joinQueue()">
-<h1>You are waiting in a queue for a live battle prepare yourself.</h1>
+    <div>
+        <h1>You are waiting in a queue for a live battle prepare yourself.</h1>
+    </div>
 </body>
 <script>
     Pusher.logToConsole = true;
@@ -29,7 +31,7 @@
         $.ajax({
             url: "https://heroonline.com/heroonline/public/index.php?target=battle&action=enterBattle",
             success:function(result){
-                $("body").replaceWith(result);
+                $("div").replaceWith(result);
             }
         });
     });

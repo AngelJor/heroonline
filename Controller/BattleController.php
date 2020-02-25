@@ -16,7 +16,8 @@ class BattleController
         $battleQuery = new BattleQuery();
         $buffId = empty($_POST['boostId']) ? 0 : $_POST['boostId'];
         $buff = $battleQuery->getFieldsForBuff($buffId);
-        $additionalDmg = empty($buff[0]['boost_buff']) ? 0 : $buff[0]['boost_buff'] ;
+        $additionalDmg = empty($buff[0]['boost_buff']) ? 0 : $buff[0]['boost_buff'];
+        $_SESSION["dmgBuff"] = $additionalDmg;
         if(isset($buff[0]['price'])){
             $shopController = new ShopController();
             $shopController->buyBuff($buff[0]['price']);
@@ -101,23 +102,19 @@ class BattleController
         $attacker = new Champion($this->battle->getAttackerId($battleId));
         $defender = new Champion($this->battle->getDefenderId($battleId));
 
-        $battleQuery = new BattleQuery();
-
-        if($battleQuery->getAttacker($battleId) == $_SESSION['myChampId']) {
+        if($this->battle->getAttackerId($battleId) == $_SESSION['myChampId']) {
 
             $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
-
             if (!isset(current($result['round'])['battleOver'])) {
                 $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
             }
             WebResponse::renderWithJson($result);
         }
         else{
-
-            $result['round'][] = $this->battle->battle($defender, $attacker, AIChampion::chooseAttackWay());
+            $result['round'][] = $this->battle->battle($attacker, $defender, AIChampion::chooseAttackWay());
 
             if (!isset(current($result['round'])['battleOver'])) {
-                $result['round'][] = $this->battle->battle($attacker, $defender, $_POST['Attack']);
+                $result['round'][] = $this->battle->battle($defender, $attacker, $_POST['Attack']);
             }
             WebResponse::renderWithJson($result);
         }
@@ -142,25 +139,27 @@ class BattleController
         );
         $battleQuery = new BattleQuery();
         $lobbyQuery = new LobbyQuery();
+        $championSpellQuery = new ChampionSpellQuery();
+
         $msg = "You have entered a battle";
         $pusher->trigger('queue','battle',$msg);
 
         $users = $lobbyQuery->getUserId();
 
         $myId = $_SESSION['myChampId'];
-        switch($_SESSION['myChampId']){
+        $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($myId));
+        $mineHealPower = $championSpellQuery->getChampionSpellPower($myId,"Heal");
+        $mineDmgPower = $championSpellQuery->getChampionSpellPower($myId,"Dmg");
+        $mine = new Champion($myId);
+
+        switch($myId){
             case $users[0]['user1_id']:
 
                 $opponentId = (int)$users[1]['user1_id'];
-                $championSpellQuery = new ChampionSpellQuery();
 
-                $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($myId));
                 $opponentAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($opponentId));
-                $mineHealPower = $championSpellQuery->getChampionSpellPower($myId,"Heal");
-                $mineDmgPower = $championSpellQuery->getChampionSpellPower($myId,"Dmg");
                 $enemyHealPower = $championSpellQuery->getChampionSpellPower($opponentId,"Heal");
                 $enemyDmgPower = $championSpellQuery->getChampionSpellPower($opponentId,"Dmg");
-                $mine = new Champion($myId);
                 $enemy = new Champion($opponentId);
                 WebResponse::render("../View/partial/onlineBattle.php",array('battleId' => $battleQuery->getId($myId,$opponentId)
                 ,'enemy' => $opponentAvatarPath,
@@ -177,15 +176,10 @@ class BattleController
             case $users[1]['user1_id']:
 
                 $opponentId = (int)$users[0]['user1_id'];
-                $championSpellQuery = new ChampionSpellQuery();
 
-                $mineAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($myId));
                 $opponentAvatarPath = Champion::getAvatarPath(Champion::getAvatarID($opponentId));
-                $mineHealPower = $championSpellQuery->getChampionSpellPower($myId,"Heal");
-                $mineDmgPower = $championSpellQuery->getChampionSpellPower($myId,"Dmg");
                 $enemyHealPower = $championSpellQuery->getChampionSpellPower($opponentId,"Heal");
                 $enemyDmgPower = $championSpellQuery->getChampionSpellPower($opponentId,"Dmg");
-                $mine = new Champion($myId);
                 $enemy = new Champion($opponentId);
                 WebResponse::render("../View/partial/onlineBattle.php",array('battleId' => $battleQuery->getId($myId,$opponentId),'enemy' => $opponentAvatarPath,
                     'mine' => $mineAvatarPath,'player1'=>$myId,

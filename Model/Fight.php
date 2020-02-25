@@ -43,8 +43,14 @@ class Fight
         $heal[] = $championSpellQuery->getChampionSpellPower($attacker->getId(),self::SPELL_HEAL);
         switch ($attackWay){
             case self::ATTACK:
-                $defender->setHealth($defender->getHealth() - self::$armorLevelToDmg[$defender->getArmourItem()] * $attacker->getStrength());
-                $roundQuery->create($battleId,$attacker->getId(),$defender->getId(),$defender->getHealth(),$attacker->getStrength(),0);
+                if($attacker->getId() == $_SESSION["myChampId"]) {
+                    $defender->setHealth($defender->getHealth() - self::$armorLevelToDmg[$defender->getArmourItem()] * ($attacker->getStrength() + $_SESSION["dmgBuff"]));
+                    $roundQuery->create($battleId, $attacker->getId(), $defender->getId(), $defender->getHealth(), $attacker->getStrength(), 0);
+                }
+                else{
+                    $defender->setHealth($defender->getHealth() - self::$armorLevelToDmg[$defender->getArmourItem()] * ($attacker->getStrength()));
+                    $roundQuery->create($battleId, $attacker->getId(), $defender->getId(), $defender->getHealth(), $attacker->getStrength(), 0);
+                }
                 break;
             case self::SPELL:
                 $defender->setHealth($defender->getHealth() - $power[0][self::SPELL_POWER]);
@@ -72,6 +78,9 @@ class Fight
             'SpellDmgDone' => (int)$power[0][self::SPELL_POWER],
             'Move' => $attackWay
         ];
+        if($attacker->getId() == $_SESSION["myChampId"]){
+            $array["DmgDealt"] = $attacker->getStrength() + $_SESSION["dmgBuff"];
+        }
         $defender->saveHealthToDb();
         $battleQuery->update($defender->getId(),$attacker->getId());
 
@@ -129,8 +138,8 @@ class Fight
                     }
                 }
             }
-            return $array;
         }
+        return $array;
     }
 
     function getAttackerId($battleId){

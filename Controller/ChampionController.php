@@ -113,17 +113,8 @@ class ChampionController
             $battle = new Fight();
             $lobbyQuery = new LobbyQuery();
             $users = $lobbyQuery->getUserId();
-            $myId = $_SESSION['myChampId'];
-            if($myId == $users[0]['user1_id']){
-                $opponentId = (int)$users[1]['user1_id'];
-                $battle->createBattle($myId, $opponentId);
-                $pusher->trigger('queue','enterBattle',[]);
-            }
-            else{
-                $opponentId = (int)$users[0]['user1_id'];
-                $battle->createBattle($myId, $opponentId);
-                $pusher->trigger('queue','enterBattle',[]);
-            }
+            $battle->createBattle($users[0]['user1_id'], $users[1]['user1_id']);
+            $pusher->trigger('queue','enterBattle',[]);
         }
     }
     function chooseBoost(){
