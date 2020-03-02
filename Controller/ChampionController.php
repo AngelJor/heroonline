@@ -24,7 +24,7 @@ class ChampionController
         $champion->addSpell($_POST['healthSpellId']);
         $champion->addSpell($_POST['dmgSpellId']);
 
-        WebResponse::render("..\View\myChampion.php");
+        WebResponse::render("../View/myChampion.php");
 
     }
     public function updateSpell(){
@@ -39,7 +39,7 @@ class ChampionController
         $champion->lvlUpSpell($spellId);
     }
     public function selectOpponent(){
-        WebResponse::render("..\View\selectOpponent.php",array('champions' => Champion::listAllChampions()));
+        WebResponse::render("../View/selectOpponent.php",array('champions' => Champion::listAllChampions()));
     }
     public function leaveQueue(){
         $query = new LobbyQuery();
