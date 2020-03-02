@@ -44,7 +44,7 @@ class ShopController
 
         $this->renderChampionShop();
     }
-    function  render(){
+    function render(){
         $champ = new Champion($_SESSION["myChampId"]);
         $champVars = $champ->getChampionFields();
 

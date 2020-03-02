@@ -160,7 +160,7 @@
         FB.ui({
             display: 'popup',
             method: 'share',
-            href: 'http://imperiaonline.org',
+            href: 'https://heroonline.com/',
             quote: 'Such an amazing game'
         }, function(response){});
     };

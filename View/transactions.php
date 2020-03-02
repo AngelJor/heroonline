@@ -55,13 +55,13 @@
             <td>Small</td>
             <td>5</td>
             <td>2</td>
-            <td><button id="5" type="submit" name="LargePack" value="2">Buy<button</td>
+            <td><button id="5" type="submit" name="SmallPack" value="2">Buy<button</td>
         </tr>
         <tr>
             <td>Medium</td>
             <td>15</td>
             <td>5</td>
-            <td><button id="15" type="submit" name="LargePack" value="5">Buy<button</td>
+            <td><button id="15" type="submit" name="MediumPack" value="5">Buy<button</td>
         </tr>
         <tr>
             <td>Large</td>

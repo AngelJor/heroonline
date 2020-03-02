@@ -55,7 +55,6 @@ class ChampionController
         WebResponse::render("../View/myChampion.php",array('champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
     public static function buyDiamonds(){
-
         $champ = new Champion($_SESSION["myChampId"]);
         $champ->buyDiamonds($_POST['diamonds']);
     }

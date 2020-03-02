@@ -39,6 +39,7 @@ class BattleController
             'mineStrength'=>$mine->getStrength() + $additionalDmg,'enemyStrength'=>$enemy->getStrength(),'mineArmour'=>$mine->getArmourItem(),'enemyArmour'=>$enemy->getArmourItem()));
     }
     function startBattle(){
+        $_SESSION["dmgBuff"] = 0;
         $championSpellQuery = new ChampionSpellQuery();
         $myId = $_SESSION['myChampId'] ?? '';
         $opponentId = $_POST['opponent'] ?? '';
