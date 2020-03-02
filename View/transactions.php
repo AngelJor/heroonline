@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?=_SERVER_PATH?>View/Style/myChampion.css">
 </head>
 
 <body>
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>champion/displayChampion">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>champion/selectOpponent">Start Battle</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>shop/render">Shop</a>
+    </li>
+    <li class="nav-item log-out">
+        <a class="nav-link" href="<?=_SERVER_PATH?>user/logout">Log out</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>champion/chooseBoost">Go on a Mission</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>champion/render">Inventory</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>shop/renderChampionShop">Offers from other Champions</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="https://heroonline.com/heroonline/View/onlineBattle.php">Start Live Battle</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?=_SERVER_PATH?>shop/transactionRender">Buy diamonds</a>
+    </li>
+</ul>
+
 <script
     src="https://www.paypal.com/sdk/js?client-id=AY3pEJ98GsFoUzuLInwJzKmS3mMyFc0c3BZmoPe6_-XIsTDFRG9vUsrQm0ke9plkUqEf2gOQbm0tJnYA&currency=EUR">
 </script>

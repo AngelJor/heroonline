@@ -69,4 +69,7 @@ class ShopController
         }
         WebResponse::render("../View/ChampionTrading.php",array('item'=>$vars,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
+    function transactionRender(){
+        WebResponse::render("../View/transactions.php",array());
+    }
 }
