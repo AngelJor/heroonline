@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="<?=_SERVER_PATH?>View/Style/myChampion.css">
 </head>
 
 <body>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AUPL4FphYZ90AWwgEXNS2R9WP01bdoptBmi09Tvi1wqStX8BXnmV7PzE8RklLyXhoY4AN1JAT7XxWVi2&currency=EUR">
+</script>
+
 <ul class="nav nav-pills">
     <li class="nav-item">
         <a class="nav-link" href="<?=_SERVER_PATH?>champion/displayChampion">Home</a>
@@ -39,9 +45,6 @@
     </li>
 </ul>
 
-<script
-    src="https://www.paypal.com/sdk/js?client-id=AY3pEJ98GsFoUzuLInwJzKmS3mMyFc0c3BZmoPe6_-XIsTDFRG9vUsrQm0ke9plkUqEf2gOQbm0tJnYA&currency=EUR">
-</script>
 <div id="paypal-button-container"></div>
 <div>
     <table>
@@ -78,7 +81,7 @@
     document.getElementById("50").onclick = function () {transaction(document.getElementById("50").value,50)};
     function transaction(price,value) {
         paypal.Buttons({
-            createOrder: function (data, actions) {
+            createOrder: function(data, actions) {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
@@ -87,16 +90,19 @@
                     }]
                 });
             },
-            onApprove: function () {
-                alert("Transaction is completed");
-                $(document).ready(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: "https://heroonline.com/heroonline/public/index.php?target=champion&action=buyDiamonds",
-                        dataType: "JSON",
-                        data: {diamonds:value}
-                    });
-                })
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    // Call your server to save the transaction
+                    $(document).ready(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "https://heroonline.com/heroonline/public/index.php?target=champion&action=buyDiamonds",
+                            dataType: "JSON",
+                            data: {diamonds:value}
+                        });
+                    })
+                });
             }
         }).render('#paypal-button-container');
     }

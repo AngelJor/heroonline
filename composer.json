@@ -1,8 +1,6 @@
 {
   "require": {
     "facebook/graph-sdk": "^5.7",
-    "paypal/paypal-checkout-sdk": "1.0.0",
-    "paypal/rest-api-sdk-php": "*",
     "ext-pdo": "*",
     "pusher/pusher-php-server": "^4.1"
   }
