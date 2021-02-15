@@ -12,7 +12,7 @@
         echo ' <input type="radio" name="boostId"  value=" ' . $allBuffs['boost_id'] . ' ">The boost has ' . $allBuffs['boost_buff'] . ' power. <br>';
     }
     ?>
-    <input type="submit" name= "Fight" value= "Select"/>
+    <input type="submit" name= "Fight" value= "Fight"/>
 </form>
 </body>
 </html>

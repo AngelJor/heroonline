@@ -83,12 +83,27 @@ class ChampionController
         WebResponse::render("../View/inventory.php",array('item'=>$itemFields,'champion'=>$champVars,'mine'=>$mineAvatarPath));
     }
     public function sellItem(){
+        $champ = new Champion($_SESSION['myChampId']);
         $query = new ChampionItemQuery();
         $item = new Item($query->getItemIdByPair($_POST["pair"])[0]["item_id"]);
         $itemQuery = new ItemQuery();
         $championItemQuery = new ChampionItemQuery();
         $itemQuery->addItemForSell($_SESSION["myChampId"],$item->getId(),$query->getItemIdByPair($_POST["pair"])[0]["bought_price"] * 0.75);
         $championItemQuery->removeItem($_POST['pair']);
+        switch($item->getType()){
+            case "Health":
+                $champ->setHealth($champ->getHealth() - $item->getBuff());
+                $champ->saveHealthToDb();
+                break;
+            case "Dmg":
+                $champ->setStrength($champ->getStrength() - $item->getBuff());
+                $champ->saveDmgToDb();
+                break;
+            case "Armour":
+                $champ->setArmourItem($champ->getArmourItem() - $item->getBuff());
+                $champ->saveArmourToDb();
+                break;
+        }
         ChampionController::render();
     }
     public function joinQueue(){
@@ -108,7 +123,7 @@ class ChampionController
 
         $lobbyQuery = new LobbyQuery();
         $lobbyQuery->joinLobby($_SESSION["myChampId"]);
-        if($lobbyQuery->usersInLobby() == self::MAX_CHAMPIONS_IN_LOBBY){ //iznesi go na konstanta twa 2 che geri shte te bie
+        if($lobbyQuery->usersInLobby() == self::MAX_CHAMPIONS_IN_LOBBY){
             $battle = new Fight();
             $lobbyQuery = new LobbyQuery();
             $users = $lobbyQuery->getUserId();
